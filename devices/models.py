@@ -5,7 +5,7 @@ import uuid
 
 
 class Device(models.Model):
-    unique_device_id = models.UUIDField(default=uuid.uuid4(), editable=False)
+    unique_device_id = models.UUIDField(default=uuid.uuid4(), editable=False ,unique=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
     type = models.CharField(max_length=255)

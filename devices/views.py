@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
+from django.core.serializers import serialize
 from . import models
 import json
 
@@ -27,7 +28,16 @@ def all_devices(request):
         if(len(errors) != 0):
             print(errors)
             return JsonResponse(errors, status=400)
+        newDevice = models.Device()
+        newDevice.name = received_json_data['name']
+        newDevice.description = received_json_data["description"]
+        newDevice.type = received_json_data["type"]
+        newDevice.save()
+
         return JsonResponse(received_json_data)
 
-    reached_view = {"whatsGoingOn": "succesfull"}
-    return JsonResponse(reached_view)
+    devices = serialize('json', models.Device.objects.all())
+    device_decoded = json.loads(devices)
+
+    reached_view = {"whatsGoingOn": "whatever"}
+    return JsonResponse(device_decoded, safe=False)
