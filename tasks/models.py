@@ -10,3 +10,4 @@ class Task(models.Model):
         default=uuid.uuid4(), editable=False, unique=True)
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
     task_todo = models.TextField(default="off")
+    task_status = models.TextField(default="incomplete")

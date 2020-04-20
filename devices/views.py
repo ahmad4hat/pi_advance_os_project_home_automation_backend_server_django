@@ -32,6 +32,10 @@ def all_devices(request):
         newDevice.name = received_json_data['name']
         newDevice.description = received_json_data["description"]
         newDevice.type = received_json_data["type"]
+        if('channel' in received_json_data):
+            newDevice.channel = received_json_data["channel"]
+        if('current_state' in received_json_data):
+            newDevice.current_state = received_json_data["current_state"]
         newDevice.save()
 
         return JsonResponse(received_json_data)
@@ -39,5 +43,4 @@ def all_devices(request):
     devices = serialize('json', models.Device.objects.all())
     device_decoded = json.loads(devices)
 
-    reached_view = {"whatsGoingOn": "whatever"}
     return JsonResponse(device_decoded, safe=False)
